@@ -99,23 +99,3 @@ Puede modificar el comportamiento de registro según sus necesidades:
 
 ---
 
-## 🗂️ Estructura del proyecto (simplificada)
-
-```
-CML Project
-├── Main.vi
-├── Acquisition.lvlib
-│   ├── Acquisition Message Loop.vi
-│   ├── Acquire.vi
-│   ├── Configure Hardware.vi
-│   └── ...
-├── Logging.lvlib
-│   ├── Logging Message Loop.vi
-│   ├── Log Data.vi
-│   └── ...
-├── Settings.lvlib
-│   └── Settings Dialog.vi
-└── README.md
-```
-
-
