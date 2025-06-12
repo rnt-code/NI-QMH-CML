@@ -1,54 +1,123 @@
 # NI QMH CML
 NI Continuous Measurement and Logging Documentation
 
-Documentación Oficial de NI
-Medición y registro continuos
-El proyecto de ejemplo Continuous Measurement and Logging (CML) adquiere mediciones continuamente y las registra en disco. Ejecuta cinco bucles en paralelo:
+## Documentación Oficial de NI
+---
 
-•	Manejo de eventos (Main.vi) — El bucle de manejo de eventos (EHL) que produce mensajes basados en eventos del panel frontal, como cuando el usuario hace clic en Inicio o Configuración.
-•	Mensajería de la interfaz de usuario (Main.vi) — Un bucle de manejo de mensajes (MHL) que recibe mensajes del EHL y responde enviando mensajes a los otros MHL.
-•	Adquisición de datos (Acquisition.lvlib:Acquisition Message Loop.vi) — Un MHL que adquiere datos continuamente. Por defecto, esta plantilla simula datos adquiridos.
-•	Registro de datos (Logging.lvlib:Logging Message Loop.vi) — Un MHL que registra continuamente los datos adquiridos.
-•	Visualización de datos (Main.vi) — Un bucle While que actualiza el gráfico de forma de onda con los datos adquiridos.
+# Continuous Measurement and Logging (CML)
 
-Este proyecto de ejemplo también incluye un cuadro de diálogo Settings (Settings.lvlib) que puede utilizar para configurar la aplicación.
-Requerimientos de Sistema
-LabVIEW Base, Completo, o Sistema de Desarrollo Profesional. Este proyecto de ejemplo está diseñado para usarse con NI-DAQmx, un controlador de instrumento u otro software controlador.
-Diagrama del Proyecto
- 
-Casos de uso
-El proyecto de ejemplo CML está diseñado para una aplicación de medición continua que requiere una interfaz de usuario con capacidad de respuesta; es decir, los usuarios deben poder hacer clic en los botones incluso mientras la aplicación está ejecutando otro comando.
-Ejecución de este proyecto de ejemplo
-1.	En la ventana del Project Explorer, abra y ejecute Main.vi.
-2.	Haga clic en Start. El programa comienza a adquirir datos de forma de onda simulada.
-3.	Haga clic en los otros botones del panel frontal para explorar el proyecto de ejemplo.
-Modificación de este proyecto de ejemplo
-Añadir código de adquisición de datos
-Debe modificar el proyecto de ejemplo para adquirir datos del hardware. Complete los siguientes pasos para realizar estas modificaciones:
-1.	Añada refnums de hardware a Acquisition.lvlib:Hardware Configuration.ctl. Por ejemplo, puede utilizar los siguientes objetos aquí:
-•	DAQ tasks
-•	DAQ channels
-•	VISA sessions
-2.	Añada código de inicialización de hardware a Acquisition.lvlib:Initialize Hardware References.vi. Por ejemplo, puede utilizar los siguientes objetos aquí:
-•	DAQmx Task Name constants
-•	DAQmx Create Virtual Channel VI
-•	(Instrument Driver) Initialize VI
-3.	Añadir código de configuración de hardware a Acquisition.lvlib:Configure Hardware.vi Por ejemplo, puede utilizar los siguientes VIs aquí:
-•	DAQmx Timing VI
-•	DAQmx Trigger VI
-•	(Instrument Driver) Configure Measurement VI
-•	(Instrument Driver) Configure Autozero VI
-4.	Añada el código de adquisición de datos a Acquisition.lvlib:Acquire.vi. Por ejemplo, puede utilizar los siguientes VIs aquí:
-•	DAQmx Read VI
-•	(Instrument Driver) Read VI
-5.	Añada código que detenga la adquisición de datos a Acquisition.lvlib:Stop Acquisition.vi. Por ejemplo, puede utilizar los siguientes VIs aquí:
-•	DAQmx Clear Task VI
-•	(Instrument Driver) Close VI
+Este proyecto de ejemplo implementa un sistema de **medición y registro continuos** utilizando el patrón **Queued Message Handler (QMH)**. La aplicación adquiere datos en forma continua, los visualiza y los registra en disco, permitiendo además interacción fluida con la interfaz de usuario.
 
-Personalizando el Código de Registro de Datos
-Si el comportamiento de registro por defecto no satisface las necesidades de su aplicación, puede modificar este proyecto de ejemplo de las siguientes maneras:
+## 🧩 Arquitectura general
 
-•	Para especificar dónde se registran los datos, ejecute Main.vi, haga clic en Settings y utilice el control Log File Path. Por defecto, esta plantilla registra los datos en LabVIEW Data\Logged Data.tdms, donde LabVIEW Data es la carpeta LabVIEW Data.
-•	Para cambiar el mecanismo de registro de datos, modifique Logging.lvlib:Logging Message Loop.vi. Por ejemplo, podría modificar este VI para transmitir los datos adquiridos a través de una red o a disco.
-•	Para cambiar el código que escribe los datos en el disco, modifique Logging.lvlib:Log Data.vi. Por ejemplo, podría utilizar los VIs Export Waveforms to Spreadsheet File o Write to Spreadsheet File. Por defecto, esta plantilla utiliza las funciones TDMS para registrar los datos en un archivo .tdms.
-•	Para cambiar o añadir rutas y refnums de archivos que son necesarios para el registro de datos, modifique Logging.lvlib:Logging Configuration.ctl.
+El VI principal (`Main.vi`) ejecuta cinco bucles en paralelo, cada uno con responsabilidades específicas:
+
+* **Manejo de eventos** (`Main.vi`)
+  Event Handling Loop (EHL) que detecta eventos del panel frontal, como clics en los botones "Start" o "Settings".
+
+* **Mensajería de la interfaz de usuario** (`Main.vi`)
+  Message Handling Loop (UI MHL) que recibe mensajes del EHL y los distribuye al resto de los módulos.
+
+* **Adquisición de datos** (`Acquisition.lvlib:Acquisition Message Loop.vi`)
+  MHL responsable de adquirir datos de forma continua. En esta plantilla, se simulan los datos por defecto.
+
+* **Registro de datos** (`Logging.lvlib:Logging Message Loop.vi`)
+  MHL que registra los datos adquiridos en disco utilizando el formato TDMS.
+
+* **Visualización de datos** (`Main.vi`)
+  Un bucle `While` que actualiza el gráfico de forma de onda con los datos más recientes.
+
+> Este proyecto también incluye un diálogo de configuración (`Settings.lvlib`) para definir parámetros de funcionamiento, como la ruta del archivo de log.
+
+---
+
+## 🧰 Requisitos del sistema
+
+* LabVIEW Base, Full o Professional Development System.
+* NI-DAQmx o cualquier otro controlador compatible para hardware de adquisición o instrumentación.
+
+---
+
+## 📊 Casos de uso
+
+El ejemplo CML está diseñado para aplicaciones de medición continua que requieren:
+
+* Adquisición y registro ininterrumpidos.
+* Interfaz de usuario siempre receptiva, incluso durante operaciones intensivas.
+
+---
+
+## ▶️ Ejecución
+
+1. Abrir y ejecutar `Main.vi` desde el **Project Explorer**.
+2. Hacer clic en **Start** para iniciar la simulación de adquisición de datos.
+3. Interactuar con los demás botones del panel frontal para explorar las funcionalidades.
+
+---
+
+## 🛠️ Modificación para adquisición real
+
+Para adaptar el proyecto al uso con hardware de adquisición real:
+
+1. **Agregar referencias de hardware** en
+   `Acquisition.lvlib:Hardware Configuration.ctl`
+   Ejemplos: DAQ tasks, canales DAQ, sesiones VISA.
+
+2. **Inicializar hardware** en
+   `Acquisition.lvlib:Initialize Hardware References.vi`
+   Ejemplos: `DAQmx Create Virtual Channel`, `Instrument Driver Initialize`.
+
+3. **Configurar hardware** en
+   `Acquisition.lvlib:Configure Hardware.vi`
+   Ejemplos: `DAQmx Timing`, `DAQmx Trigger`, `Configure Measurement`, `Configure Autozero`.
+
+4. **Leer datos** en
+   `Acquisition.lvlib:Acquire.vi`
+   Ejemplos: `DAQmx Read`, `Instrument Driver Read`.
+
+5. **Detener adquisición** en
+   `Acquisition.lvlib:Stop Acquisition.vi`
+   Ejemplos: `DAQmx Clear Task`, `Instrument Driver Close`.
+
+---
+
+## 📝 Personalización del registro de datos
+
+Puede modificar el comportamiento de registro según sus necesidades:
+
+* **Ruta del archivo**
+  Desde el diálogo de configuración (Settings), cambiar el campo **Log File Path**. Por defecto:
+  `...\LabVIEW Data\Logged Data.tdms`.
+
+* **Mecanismo de registro**
+  Modificar `Logging.lvlib:Logging Message Loop.vi` para registrar a disco, red u otro destino.
+
+* **Formato de escritura**
+  Modificar `Logging.lvlib:Log Data.vi`. Se puede reemplazar el formato TDMS por funciones como:
+  `Export Waveforms to Spreadsheet File`, `Write to Spreadsheet File`.
+
+* **Configuración de archivo/log**
+  Modificar `Logging.lvlib:Logging Configuration.ctl` para ajustar rutas o referencias necesarias para el log.
+
+---
+
+## 🗂️ Estructura del proyecto (simplificada)
+
+```
+CML Project
+├── Main.vi
+├── Acquisition.lvlib
+│   ├── Acquisition Message Loop.vi
+│   ├── Acquire.vi
+│   ├── Configure Hardware.vi
+│   └── ...
+├── Logging.lvlib
+│   ├── Logging Message Loop.vi
+│   ├── Log Data.vi
+│   └── ...
+├── Settings.lvlib
+│   └── Settings Dialog.vi
+└── README.md
+```
+
+
