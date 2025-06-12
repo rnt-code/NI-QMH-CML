@@ -100,3 +100,19 @@ Puede modificar el comportamiento de registro según sus necesidades:
 ---
 Fin documentación oficial
 
+## Digramas de funcionamiento del programa
+
+![Página_1](https://github.com/user-attachments/assets/dc53907d-c4bd-4275-b63e-4777324c63fc)
+
+
+![Página_2](https://github.com/user-attachments/assets/f3083d61-fe23-4ee7-835b-bd3a4c371100)
+
+
+![Página_3](https://github.com/user-attachments/assets/35b80d49-0e38-40b9-ae78-64e0e995455c)
+
+
+![Página_4](https://github.com/user-attachments/assets/4f2623eb-a7f0-4536-a349-38d96c608f61)
+
+
+![Página_5](https://github.com/user-attachments/assets/97a12b11-652a-4826-8107-40db4704fd56)
+
