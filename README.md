@@ -2,7 +2,6 @@
 NI Continuous Measurement and Logging Documentation
 
 ## Documentación Oficial de NI
----
 
 # Continuous Measurement and Logging (CML)
 
