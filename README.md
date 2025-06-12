@@ -98,4 +98,5 @@ Puede modificar el comportamiento de registro según sus necesidades:
   Modificar `Logging.lvlib:Logging Configuration.ctl` para ajustar rutas o referencias necesarias para el log.
 
 ---
+Fin documentación oficial
 
