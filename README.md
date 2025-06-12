@@ -1,5 +1,4 @@
-# NI QMH CML
-NI Continuous Measurement and Logging Documentation
+# NI QMH Continuous Measurement and Logging Documentation
 
 ## Documentación Oficial de NI
 
