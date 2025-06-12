@@ -34,6 +34,10 @@ El VI principal (`Main.vi`) ejecuta cinco bucles en paralelo, cada uno con respo
 * LabVIEW Base, Full o Professional Development System.
 * NI-DAQmx o cualquier otro controlador compatible para hardware de adquisición o instrumentación.
 
+## Diagrama del proyecto
+
+![loc_continuous_measurement](https://github.com/user-attachments/assets/0bff9025-06e3-4924-85a1-ab4f833fa8cc)
+
 ---
 
 ## 📊 Casos de uso
